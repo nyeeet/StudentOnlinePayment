@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+:root {
+    --primary: #3f51b5;
+    --primary-dark: #303f9f;
+    --primary-light: #c5cae9;
+    --accent: #ff4081;
+    --accent-dark: #f50057;
+    --accent-light: #ff80ab;
+    --success: #4caf50;
+    --warning: #ff9800;
+    --danger: #f44336;
+    --text-light: #e8eaf6;
+    --text-dark: #263238;
+    --text-muted: #90a4ae;
+    --gray-light: #eceff1;
+    --gray-medium: #cfd8dc;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+    --animation-curve: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-grow: 1;
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--primary);
+    padding: 12px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--shadow-medium);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.school-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notifications {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent);
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.user-profile:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--primary-dark);
+}
+
+.user-name {
+    font-size: 0.9rem;
+}
+
+</style>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="images/logo.jpg" alt="School Logo" class="logo">
+            <div class="school-name" id="schoolName">ACLC College of Mandaue</div>
+        </div>
+        <div class="user-menu">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge" id="notificationCount">0</div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar" id="userInitials">JS</div>
+                <div class="user-name" id="userName">John Smith</div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

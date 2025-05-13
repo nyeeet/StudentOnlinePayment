@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>School Attendance Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #0f2542;
+            --secondary-color: #1a3b5d;
+            --accent-color: #4CAF50;
+            --text-color: #ffffff;
+            --border-color: #2c4c6e;
+            --light-text: #a0b0c5;
+            --card-bg: #1a3b5d;
+            --increase-color: #4CAF50;
+            --decrease-color: #f44336;
+            --upcoming-color: #7986cb;
+            --ongoing-color: #ffb74d;
+            --cancelled-color: #ef5350;
+            --completed-color: #81c784;
+            --calendar-highlight: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .header-title i {
+            margin-right: 8px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .main {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .calendar-section {
+            background: var(--secondary-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .mini-calendar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .calendar-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 45px;
+            padding: 10px 5px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .calendar-day.active {
+            background-color: var(--calendar-highlight);
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .day-name {
+            font-size: 12px;
+            color: var(--light-text);
+            text-transform: uppercase;
+        }
+
+        .search-wrapper {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--light-text);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .search-bar {
+            display: flex;
+            width: 100%;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            font-size: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .search-input::placeholder {
+            color: var(--light-text);
+        }
+
+        .search-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 0 6px 6px 0;
+            color: var(--text-color);
+            padding: 0 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 8px;
+        }
+
+        .metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .icon-checkin {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--increase-color);
+        }
+
+        .icon-checkout {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+
+        .icon-absent {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+        }
+
+        .icon-late {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--decrease-color);
+        }
+
+        .metric-content {
+            flex: 1;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .metric-trend {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .metric-trend i {
+            font-size: 14px;
+            margin-right: 3px;
+        }
+
+        .trend-up {
+            color: var(--increase-color);
+        }
+
+        .trend-down {
+            color: var(--decrease-color);
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: var(--light-text);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .help-text i {
+            font-size: 16px;
+            margin-right: 4px;
+        }
+
+        .action-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .action-button i {
+            margin-right: 8px;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--secondary-color);
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--light-text);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <i class="material-icons">school</i>
+                School Attendance
+                
+            </div>
+            <div class="user-avatar">P</div>
+        </div>
+        
+        <div class="main">
+            <div class="calendar-section">
+                <div class="mini-calendar">
+                    <div class="calendar-day">
+                        <div class="day-number">06</div>
+                        <div class="day-name">Sun</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">07</div>
+                        <div class="day-name">Mon</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">08</div>
+                        <div class="day-name">Tue</div>
+                    </div>
+                    <div class="calendar-day active">
+                        <div class="day-number">09</div>
+                        <div class="day-name">Wed</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">10</div>
+                        <div class="day-name">Thu</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">11</div>
+                        <div class="day-name">Fri</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="day-number">12</div>
+                        <div class="day-name">Sat</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-wrapper">
+                <label class="search-label">Find your child:</label>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Enter student name or ID">
+                    <button class="search-button">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="section-title">
+                <i class="material-icons">today</i>
+                Today's Attendance Summary
+            </div>
+            
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-icon icon-checkin">
+                        <i class="material-icons">login</i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">School Arrival</div>
+                        <div class="metric-value">7:45 AM</div>
+                        <div class="help-text">
+                            <i class="material-icons">check_circle</i>
+                            On time
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon icon-checkout">
+                        <i class="material-icons">logout</i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">School Departure</div>
+                        <div class="metric-value">3:30 PM</div>
+                        <div class="help-text">
+                            <i class="material-icons">schedule</i>
+                            Regular dismissal time
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon icon-absent">
+                        <i class="material-icons">event_busy</i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Monthly Absences</div>
+                        <div class="metric-value">2 days</div>
+                        <div class="help-text">
+                            <i class="material-icons">info</i>
+                            Last absence: April 2, 2025
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon icon-late">
+                        <i class="material-icons">access_time</i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Monthly Tardiness</div>
+                        <div class="metric-value">1 time</div>
+                        <div class="help-text">
+                            <i class="material-icons">info</i>
+                            Last tardy: March 28, 2025
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="action-button">
+                <i class="material-icons">calendar_month</i>
+                View Full Attendance History
+            </button>
+        </div>
+        
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i class="material-icons">home</i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons">assignment</i>
+                <span>Classes</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons">chat</i>
+                <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="material-icons">person</i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

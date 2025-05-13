@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ACLC Payment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/uiHomepage.css') }}">
+</head>
+<body>
+{% block body %}
+        <header class="header">
+            <div class="logo-container">
+                <img src="/static/images/aclc logo.jpg" alt="ACLC Logo" class="logo">
+                <div class="school-name">ACLC College</div>
+            </div>
+            <div class="user-menu">
+                <div class="user-profile">
+                    <div class="user-avatar" id="userInitials"></div>
+                    <div class="user-name" id="userName"></div>
+                </div>
+            </div>
+        </header>
+
+
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="sidebar-menu">
+                    <a href="{{url_for('UIhomepage', login_id = login_id)}}" class="menu-item active">
+                        <i class="fas fa-th-large menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                    <br>
+                    <div class="divider"></div>
+                 <a href="{{url_for('schedule', login_id = login_id)}}" class="menu-item">
+                    <i class="fas fa-calendar-alt menu-icon"></i>
+                    <span class="menu-text">Schedule</span>
+                </a>
+                <a href="{{url_for('paymentui', login_id = login_id)}}" class="menu-item">
+                    <i class="fas fa-file-invoice-dollar menu-icon"></i>
+                    <span class="menu-text">Payments</span>
+                </a>
+
+                <a href="{{url_for('history', login_id = login_id)}}" class="menu-item">
+                    <i class="fas fa-history menu-icon"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <div class="divider"></div>
+                <a href="{{url_for('index')}}" class="menu-item">
+                    <i class="fas fa-sign-out menu-icon"></i>
+                    <span class="menu-text">Logout</span>
+                </a>
+                <!-- <a href="#" class="menu-item">
+                    <i class="fas fa-question-circle menu-icon"></i>
+                    <span class="menu-text">Help</span>
+                </a> -->
+                </nav>
+            </aside>
+
+            <main class="content">
+                <div class="page-title">
+                    <div>
+                        <h1 class="greeting" id="userGreeting">Hello!</h1>
+                        <p class="subtitle">Welcome to your payment dashboard</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Financial Summary Card -->
+                    <div class="card col-span-8">
+                        <div class="card-header">
+                            <h3 class="card-title">Financial Summary</h3>
+                            <div class="card-actions">
+                                <button class="card-action">
+                                    <i class="fas fa-sync-alt"></i>
+                                    Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="financial-summary">
+                                <div class="summary-item">
+                                    <div class="summary-label">Total Tuition</div>
+                                    <div class="summary-value" id="totalTuition">₱{{ tuition }}</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Amount Paid</div>
+                                    <div class="summary-value" id="amountPaid">₱
+                                    {% if current_user.finals == true %}
+                                        {{ tuition }}
+                                    {% elif current_user.prefinal == true %}
+                                        {{ tuition*3/4 }}
+                                    {% elif current_user.midterm == true %}
+                                        {{ tuition/2 }}
+                                    {% elif current_user.prelim == true %}
+                                        {{ tuition/4 }}
+                                    {% elif current_user.prelim == false %}
+                                        {{ 0 }}
+                                    {% endif %}
+                                    </div>
+                                    <!-- <div class="summary-change positive">
+                                        <i class="fas fa-arrow-up"></i> ₱10,000 from last month
+                                    </div> -->
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Remaining Balance</div>
+                                    <div class="summary-value" id="remainingBalance">₱
+                                    {% if current_user.finals == true %}
+                                        {{ 0 }}
+                                    {% elif current_user.prefinal == true %}
+                                        {{ tuition/4 }}
+                                    {% elif current_user.midterm == true %}
+                                        {{ tuition/2 }}
+                                    {% elif current_user.prelim == true %}
+                                        {{ tuition*3/4 }}
+                                    {% elif current_user.prelim == false %}
+                                        {{ tuition }}
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Payment Progress</span>
+                                    <span id="progressPercentage">
+                                    {% if current_user.finals == true %}
+                                        {{ 100 }}
+                                    {% elif current_user.prefinal == true %}
+                                        {{ 75 }}
+                                    {% elif current_user.midterm == true %}
+                                        {{ 50 }}
+                                    {% elif current_user.prelim == true %}
+                                        {{ 25 }}
+                                    {% elif current_user.prelim == false %}
+                                        {{ 0 }}
+                                    {% endif %}
+                                    % Complete</span>
+                                </div>
+                                <div class="progress-bar">
+                                    {% if current_user.finals == true %}
+                                        <div class="progress-fill" id="progressFill" style="width: 100%;"></div>
+                                    {% elif current_user.prefinal == true %}
+                                        <div class="progress-fill" id="progressFill" style="width: 75%;"></div>
+                                    {% elif current_user.midterm == true %}
+                                        <div class="progress-fill" id="progressFill" style="width: 50%;"></div>
+                                    {% elif current_user.prelim == true %}
+                                        <div class="progress-fill" id="progressFill" style="width: 25%;"></div>
+                                    {% elif current_user.prelim == false %}
+                                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Status Card -->
+                    <div class="card col-span-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Current Status</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-info">
+                                <div style="text-align: center; padding: 15px;">
+                                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success); margin-bottom: 15px;"></i>
+                                    <h3 style="margin-bottom: 10px;">Good Standing</h3>
+                                    <p style="color: var(--text-muted); margin-bottom: 15px;">Your account is up to date</p>
+                                    <div style="padding: 10px; background-color: var(--gray-light); border-radius: 6px;">
+                                        <p style="font-size: 0.9rem;"><strong>Next Payment:</strong> ₱{{ tuition/4 }}</p>
+                                        <p style="font-size: 0.9rem;"><strong>Due Date:</strong> May 15, 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Schedule -->
+                  <!-- Payment Schedule -->
+    <div class="card col-span-6">
+        <div class="card-header">
+            <h3 class="card-title">Payment Schedule</h3>
+            <div class="card-actions">
+                <a href="{{url_for('schedule', login_id = login_id)}}" class="card-action">
+                    <i class="fas fa-calendar-alt"></i>
+                    View All
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <ul class="schedule-list">
+                <li class="schedule-item">
+                    <div class="schedule-info">
+                        <div class="schedule-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Prelim Examination Fee</h4>
+                            <p>January 15, 2025</p>
+                        </div>
+                    </div>
+                    {% if current_user.prelim == false %}
+                        <div class="schedule-status status-upcoming">Upcoming</div>
+                    {% elif current_user.prelim == true %}
+                        <div class="schedule-status status-pending">Done</div>
+                    {% endif %}
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-info">
+                        <div class="schedule-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Midterm Examination Fee</h4>
+                            <p>February 15, 2025</p>
+                        </div>
+                    </div>
+                    {% if current_user.midterm == false %}
+                        <div class="schedule-status status-upcoming">Upcoming</div>
+                    {% elif current_user.midterm == true %}
+                        <div class="schedule-status status-pending">Done</div>
+                    {% endif %}
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-info">
+                        <div class="schedule-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Pre-Final Examination Fee</h4>
+                            <p>April 15, 2025</p>
+                        </div>
+                    </div>
+                    {% if current_user.prefinal == false %}
+                        <div class="schedule-status status-upcoming">Upcoming</div>
+                    {% elif current_user.prefinal == true %}
+                        <div class="schedule-status status-pending">Done</div>
+                    {% endif %}
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-info">
+                        <div class="schedule-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="schedule-details">
+                            <h4>Final Examination Fee</h4>
+                            <p>May 15, 2025</p>
+                        </div>
+                    </div>
+                    {% if current_user.finals == false %}
+                        <div class="schedule-status status-upcoming">Upcoming</div>
+                    {% elif current_user.finals == true %}
+                        <div class="schedule-status status-pending">Done</div>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card col-span-6">
+        <div class="card-header">
+            <h3 class="card-title">Recent Transactions</h3>
+            <div class="card-actions">
+                <a href="{{url_for('history', login_id = login_id)}}"  class="card-action">
+                    <i class="fas fa-history"></i>
+                    View History
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-credit-card" style="font-size: 2rem; color: var(--text-muted); margin-bottom: 15px;"></i>
+                <h4 style="margin-bottom: 10px;">No Recent Transactions</h4>
+                <p style="color: var(--text-secondary);">No payment methods have been set up yet.</p>
+                <button class="btn" style="margin-top: 15px; padding: 8px 16px; background-color: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    <i class="fas fa-plus"></i> Add Payment Method
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+<!-- JavaScript for calculating payment amounts by exam period -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get user data from localStorage that was set during login
+    const currentUserJSON = sessionStorage.getItem('currentUser');
+    
+    if (true) {
+         const currentUser = {{session['currentuser'] | tojson}};
+
+        // Update user profile display with actual user data
+        const firstName = currentUser.firstName;
+        const lastName = currentUser.lastName;
+        const fullName = firstName + lastName;
+        // const fullName = `${firstName} ${lastName}`;
+        const initials = firstName.charAt(0) + lastName.charAt(0);
+        // const tuition = currentUser.tuition;
+        
+        // Set user name in header and greeting
+        document.getElementById('userName').textContent = fullName;
+        document.getElementById('userInitials').textContent = initials;
+        document.getElementById('userGreeting').textContent = `Hello, ${firstName}!`;
+        
+        // Set tuition information based on the user's course
+        // document.getElementById('totalTuition').textContent = `₱${tuition.toLocaleString()}`;
+        
+        // // Calculate payments for each exam period (divide tuition by 4)
+        // const paymentPerExam = tuition / 4;
+        
+        // // Since no payments have been made yet
+        // const amountPaid = 0;
+        // const remainingBalance = tuition;
+        // const progressPercentage = 0;
+        
+        // document.getElementById('amountPaid').textContent = `₱${amountPaid.toLocaleString()}`;
+        // document.getElementById('remainingBalance').textContent = `₱${remainingBalance.toLocaleString()}`;
+        // document.getElementById('progressPercentage').textContent = `${progressPercentage}% Complete`;
+        // document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+        
+        // // Update payment amounts in the schedule list
+        // const scheduleItems = document.querySelectorAll('.schedule-item .schedule-details h4');
+        // scheduleItems.forEach((item, index) => {
+        //     const originalText = item.textContent;
+        //     const examType = originalText.split(' ')[0]; // Get the exam type (Prelim, Midterm, etc.)
+        //     item.textContent = `${examType} Examination Fee - ₱${paymentPerExam.toLocaleString()}`;
+        // });
+        
+        // // Update next payment in Current Status card
+        // const nextPaymentElement = document.querySelector('.status-info p:first-of-type strong');
+        // if (nextPaymentElement && nextPaymentElement.nextSibling) {
+        //     nextPaymentElement.nextSibling.textContent = ` ₱${paymentPerExam.toLocaleString()}`;
+        // }
+        
+        // // Update payment statuses since no payments have been made
+        // const paymentStatuses = document.querySelectorAll('.schedule-status');
+        // paymentStatuses.forEach((status, index) => {
+        //     if (index === 0) {
+        //         status.textContent = 'Due Today';
+        //         status.className = 'schedule-status status-pending';
+        //     } else {
+        //         status.textContent = 'Upcoming';
+        //         status.className = 'schedule-status status-upcoming';
+        //     }
+        // });
+        
+        // console.log("User data loaded successfully:", { fullName, tuition, paymentPerExam });
+    }
+    else {
+        // If no user data found, redirect back to login page
+        alert("No user session found. Please log in.");
+        window.location.href = "index.html";
+    }
+});
+</script>
+
+</html>
