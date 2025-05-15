@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student's Online Payment - ACLC College</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <img src="static/images/aclc logo.jpg" alt="ACLC Logo" class="logo">
+            <div>
+                <div class="school-name">ACLC College of Mandaue</div>
+                <div class="tagline">To provide a holistic, relevant, quality and
+                     globally recognized IT-based education</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="{{url_for('index')}}" class="nav-link">Home</a>
+            <a href="{{url_for('about')}}"class="nav-link">About</a>
+            <a href="{{url_for('index')}}" class="nav-link">Contact</a>
+            <a href="{{url_for('index')}}"class="nav-link">Help</a>
+        </nav>
+    </header>
+    
+   
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="element-slide-up">Student Online Payment Portal</h1>
+            <p class="subtitle element-slide-up">A secure and convenient way to manage your tuition fees, miscellaneous expenses, and other academic payments in one place.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3 class="feature-title">Secure Payments</h3>
+                    <p class="feature-desc">Encrypted transactions to keep your financial information safe</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h3 class="feature-title">24/7 Access</h3>
+                    <p class="feature-desc">Pay anytime, anywhere with our online portal</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-history feature-icon"></i>
+                    <h3 class="feature-title">Payment History</h3>
+                    <p class="feature-desc">Track all your payments and download receipts</p>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button id="loginBtn" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Register 
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </button>
+            </div>
+        </div>
+    </div>
+    
+   
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div>ACLC College</div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">FAQ</a>
+                <a href="#" class="footer-link">Support</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 ACLC College | All Rights Reserved
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+    const elements = document.querySelectorAll('.element-slide-up');
+    elements.forEach((element) => {
+        element.classList.remove('element-slide-up');
+    });
+    
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function() {
+            navigateToLogin();
+        });
+    }
+});
+
+function navigateToLogin() {
+    window.location.href = "/usersLogIn";
+}
+    </script>
+</body>
+</html>

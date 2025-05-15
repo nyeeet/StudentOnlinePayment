@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment History - ACLC Payment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/uiHomepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paymentHistory.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/static/images/aclc logo.jpg" alt="ACLC Logo" class="logo">
+            <div class="school-name">ACLC College</div>
+        </div>
+        <div class="user-menu">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge">3</div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar" id="userInitials">JS</div>
+                <div class="user-name" id="userName">John Smith</div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+                <nav class="sidebar-menu">
+                    <a href="{{url_for('UIhomepage', login_id = login_id)}}" class="menu-item ">
+                        <i class="fas fa-th-large menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                    <br>
+                    <div class="divider"></div>
+                 <a href="{{url_for('schedule', login_id = login_id)}}" class="menu-item">
+                    <i class="fas fa-calendar-alt menu-icon"></i>
+                    <span class="menu-text">Schedule</span>
+                </a>
+                <a href="{{url_for('paymentui', login_id = login_id)}}" class="menu-item">
+                    <i class="fas fa-file-invoice-dollar menu-icon"></i>
+                    <span class="menu-text">Payments</span>
+                </a>
+
+                <a href="{{url_for('history', login_id = login_id)}}" class="menu-item active">
+                    <i class="fas fa-history menu-icon" ></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <div class="divider"></div>
+                <a href="{{url_for('index')}}" class="menu-item">
+                    <i class="fas fa-sign-out menu-icon"></i>
+                    <span class="menu-text">Logout</span>
+                </a>
+                <!-- <a href="#" class="menu-item">
+                    <i class="fas fa-question-circle menu-icon"></i>
+                    <span class="menu-text">Help</span>
+                </a> -->
+                </nav>
+            </aside>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <div class="page-title">
+                <div>
+                    <h1 class="section-title">Payment History</h1>
+                    <p class="subtitle">View and manage your payment records</p>
+                </div>
+                <div class="quick-actions">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-filter"></i>
+                        Filter
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Payment History Summary -->
+               
+
+                <!-- Transaction History -->
+                <div class="card col-span-12">
+                    <div class="card-header">
+                        <h3 class="card-title">Transaction History</h3>
+                        <div class="card-actions">
+                            <button class="card-action">
+                                <i class="fas fa-sort"></i>
+                                Sort
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="history-table-container">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Reference ID</th>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Payment Method</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in user_payments %}
+                                    <tr id= '${payment.id}' >
+                                        <td class="ref-id">{{payment.id}}</td>
+                                        <td>Mar 6, 2025</td>
+                                        <td>Examination Fee
+                                        </td>
+                                        <td>
+                                            <div class="payment-method">
+                                                <i class="fas fa-wallet"></i>
+                                                <!-- <i class="fab fa-cc-visa"></i> -->
+                                                <span>{{payment.method}}</span>
+                                            </div>
+                                        </td>
+                                        <td class="amount">₱{{tuition/4}}</td>
+                                        <td><span class="status-badge status-completed">Completed</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <button class="action-btn" title="Delete Record" onclick="deleterecord({{payment.id}})">
+                                                    <i class="fas fa-file-alt"></i>
+                                                </button>
+                                                <a class="action-btn" title="Download" href='/static/receipt.pdf'>
+                                                    <i class="fas fa-download"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="pagination">
+                            <button class="pagination-btn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="pagination-btn active">1</button>
+                            <button class="pagination-btn">2</button>
+                            <button class="pagination-btn">3</button>
+                            <button class="pagination-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ACLC College. All rights reserved. | Privacy Policy | Terms of Service | Contact Us</p>
+    </footer>
+
+    <script>
+        function deleterecord(id){
+            fetch(`/delete/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                    // Optionally remove the row from the page
+                    location.reload();
+
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Delete failed:', error);
+            });
+        }
+
+        if (true) {
+         const currentUser = {{session['currentuser'] | tojson}};
+
+        // Update user profile display with actual user data
+        const firstName = currentUser.firstName;
+        const lastName = currentUser.lastName;
+        const fullName = firstName + lastName;
+        // const fullName = `${firstName} ${lastName}`;
+        const initials = firstName.charAt(0) + lastName.charAt(0);
+        // const tuition = currentUser.tuition;
+
+        // Set user name in header and greeting
+        document.getElementById('userName').textContent = fullName;
+        document.getElementById('userInitials').textContent = initials;
+        document.getElementById('userGreeting').textContent = `Hello, ${firstName}!`;
+        }
+        // Filter dropdown toggle
+        const filterBtn = document.querySelector('.btn-primary');
+        const filterCard = document.querySelector('.col-span-9');
+        
+        filterBtn.addEventListener('click', () => {
+            filterCard.classList.toggle('hidden');
+        });
+        
+        // Sort functionality would be implemented here
+        const sortBtn = document.querySelector('.card-action');
+        sortBtn.addEventListener('click', () => {
+            // Sorting logic would go here
+            console.log('Sort button clicked');
+        });
+        
+        // View receipt functionality
+        const receiptBtns = document.querySelectorAll('.action-btn:first-child');
+        receiptBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                const refId = row.querySelector('.ref-id').textContent;
+                console.log('View receipt for:', refId);
+                // Logic to show receipt would go here
+            });
+        });
+        
+        // Download receipt functionality
+        const downloadBtns = document.querySelectorAll('.action-btn:last-child');
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                const refId = row.querySelector('.ref-id').textContent;
+                console.log('Download receipt for:', refId);
+                // Logic to download receipt would go here
+            });
+        });
+        function download() {
+            window.location.href = '/static/receipt.pdf';
+        }
+    </script>
+</body>
+</html>

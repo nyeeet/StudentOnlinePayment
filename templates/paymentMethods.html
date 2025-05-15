@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods - ACLC Payment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/uiHomepage.css">
+    <link rel="stylesheet" href="css/paymentMethods.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="images/aclc logo.jpg" alt="ACLC Logo" class="logo">
+            <div class="school-name">ACLC College</div>
+        </div>
+        <div class="user-menu">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <div class="notification-badge">3</div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">JS</div>
+                <div class="user-name">John Smith</div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-menu">
+                <a href="UIhomepage.html" class="menu-item active">
+                    <i class="fas fa-th-large menu-icon"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+                <br>
+                <div class="divider"></div>  
+                 <a href="schedule.html" class="menu-item">
+                    <i class="fas fa-calendar-alt menu-icon"></i>
+                    <span class="menu-text">Schedule</span>
+                </a>
+                <a href="paymentui.html" class="menu-item">
+                    <i class="fas fa-file-invoice-dollar menu-icon"></i>
+                    <span class="menu-text">Payments</span>
+                </a>
+                
+                <a href="paymentMethods.html" class="menu-item">
+                    <i class="fas fa-credit-card menu-icon"></i>
+                    <span class="menu-text">Payment Methods</span>
+                </a>
+             
+                <a href="history.html" class="menu-item">
+                    <i class="fas fa-history menu-icon"></i>
+                    <span class="menu-text">History</span>
+                </a>
+                <div class="divider"></div>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-question-circle menu-icon"></i>
+                    <span class="menu-text">Help</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <div class="page-title">
+                <div>
+                    <h1 class="section-title">Payment Methods</h1>
+                    <p class="subtitle">Manage your payment options</p>
+                </div>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" id="addNewMethodBtn">
+                        <i class="fas fa-plus"></i>
+                        Add New Method
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+               
+                <div class="card col-span-8">
+                    <div class="card-header">
+                        <h3 class="card-title">Saved Payment Methods</h3>
+                        <div class="card-actions">
+                            <button class="card-action">
+                                <i class="fas fa-sort"></i>
+                                Sort
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="payment-methods">
+                           
+                            <div class="method-card active">
+                                <div class="card-info">
+                                    <div class="card-type">Paypal</div>
+                                    <div class="card-logo">
+                                        <i class="fab fa-cc-visa"></i>
+                                    </div>
+                                </div>
+                                <div class="card-number">**** **** **** 1234</div>
+                                <div class="card-details">
+                                    <div class="default-badge">Default</div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="card-action-btn edit-btn">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                    <button class="card-action-btn delete-btn">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            
+                            <div class="method-card">
+                                <div class="card-info">
+                                    <div class="card-type">Gcash</div>
+                                    <div class="card-logo">
+                                        <i class="fab fa-cc-mastercard"></i>
+                                    </div>
+                                </div>
+                                <div class="card-number">**** **** **** 5678</div>
+                                <div class="card-details">
+                                </div>
+                                <div class="card-actions">
+                                    <button class="card-action-btn set-default-btn">
+                                        Set as Default
+                                    </button>
+                                    <button class="card-action-btn edit-btn">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                    <button class="card-action-btn delete-btn">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Add New Card -->
+                            <div class="method-card add-method">
+                                <i class="fas fa-plus"></i>
+                                <span>Add New Card</span>
+                            </div>
+                        </div>
+
+                        <!-- Other Payment Methods -->
+                        <div class="other-methods-section">
+                            <h4 class="section-subtitle">Other Payment Methods</h4>
+                            <div class="payment-methods">
+                           
+                                <div class="method-card">
+                                    <div class="card-info">
+                                        <div class="card-type">PayMaya</div>
+                                        <div class="card-logo">
+                                            <i class="fas fa-wallet"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-number">+63 *** **** 890</div>
+                                    <div class="card-actions">
+                                        <button class="card-action-btn edit-btn">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="card-action-btn delete-btn">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                          
+                                <div class="method-card">
+                                    <div class="card-info">
+                                        <div class="card-type">GrabPay</div>
+                                        <div class="card-logo">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-number">+63 *** **** 123</div>
+                                    <div class="card-actions">
+                                        <button class="card-action-btn edit-btn">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="card-action-btn delete-btn">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Add New Method -->
+                                <div class="method-card add-method">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add New Method</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Settings -->
+                <div class="card col-span-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Payment Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="payment-options">
+                            <h4 class="section-subtitle">Available Payment Options</h4>
+                            <ul class="options-list">
+                                <li class="option-item">
+                                    <div class="option-icon"><i class="fas fa-wallet"></i></div>
+                                    <div class="option-details">
+                                        <h5>E-Wallets</h5>
+                                        <p>GCash, PayMaya, GrabPay</p>
+                                    </div>
+                                </li>
+                                <li class="option-item">
+                                    <div class="option-icon"><i class="fas fa-university"></i></div>
+                                    <div class="option-details">
+                                        <h5>Bank Transfer</h5>
+                                        <p>BDO, BPI, Metrobank, Unionbank</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Payment Method Modal -->
+            <div class="modal" id="addPaymentMethodModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add Payment Method</h3>
+                        <button class="close-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="method-tabs">
+                           
+                            <button class="tab-btn" data-tab="ewallet">E-Wallet</button>
+                            <button class="tab-btn" data-tab="bank">Bank Account</button>
+                        </div>
+
+                        <div class="tab-content active" id="ewalletTab">
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label for="walletType">E-Wallet Type</label>
+                                    <select id="walletType">
+                                        <option value="gcash">GCash</option>
+                                        <option value="paymaya">PayMaya</option>
+                                        <option value="grabpay">GrabPay</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobileNumber">Mobile Number</label>
+                                    <input type="text" id="mobileNumber" placeholder="+63 912 345 6789">
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountName">Account Name</label>
+                                    <input type="text" id="accountName" placeholder="John Smith">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">Link E-Wallet</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-content" id="bankTab">
+                            <form class="payment-form">
+                                <div class="form-group">
+                                    <label for="bankName">Bank</label>
+                                    <select id="bankName">
+                                        <option value="bdo">BDO</option>
+                                        <option value="bpi">BPI</option>
+                                        <option value="metrobank">Metrobank</option>
+                                        <option value="unionbank">Unionbank</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountNumber">Account Number</label>
+                                    <input type="text" id="accountNumber" placeholder="123456789012">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bankAccountName">Account Name</label>
+                                    <input type="text" id="bankAccountName" placeholder="John Smith">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">Link Bank Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ACLC College. All rights reserved. | Privacy Policy | Terms of Service | Contact Us</p>
+    </footer>
+
+    <script>
+        // Show/hide modal
+        const addNewMethodBtn = document.getElementById('addNewMethodBtn');
+        const addMethodCards = document.querySelectorAll('.add-method');
+        const modal = document.getElementById('addPaymentMethodModal');
+        const closeBtn = document.querySelector('.close-btn');
+
+        addNewMethodBtn.addEventListener('click', () => {
+            modal.classList.add('show');
+        });
+
+        addMethodCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modal.classList.add('show');
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Show corresponding tab content
+                const tabId = btn.getAttribute('data-tab') + 'Tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
